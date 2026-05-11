@@ -4,15 +4,17 @@ invert_to_a4.py
 將圖片進行黑白反轉，放大指定倍數，並輸出為 A4 列印尺寸（300 DPI）。
 若放大後超出單頁，自動分頁輸出（page_1, page_2 ...）。
 
+預設圖片資料夾：程式所在目錄下的 IMAGE/ 子資料夾。
+
 用法：
     python3 invert_to_a4.py <輸入圖片> [輸出前綴] [--scale 倍數]
     python3 invert_to_a4.py --scan [資料夾路徑] [--scale 倍數]
 
 範例：
-    python3 invert_to_a4.py input.png                    # 單檔處理，自動單頁最大化
-    python3 invert_to_a4.py input.png output --scale 3   # 3x 放大
-    python3 invert_to_a4.py --scan                       # 掃描程式所在資料夾，補齊缺少的 inverted 檔
-    python3 invert_to_a4.py --scan /path/to/folder       # 掃描指定資料夾
+    python3 invert_to_a4.py IMAGE/input.png               # 單檔處理，自動單頁最大化
+    python3 invert_to_a4.py IMAGE/input.png output --scale 3  # 3x 放大
+    python3 invert_to_a4.py --scan                        # 掃描 IMAGE/ 資料夾，補齊缺少的 inverted 檔
+    python3 invert_to_a4.py --scan /path/to/folder        # 掃描指定資料夾
 """
 
 from PIL import Image, ImageOps
@@ -202,7 +204,8 @@ def main():
         args  = [a for i, a in enumerate(args) if i not in (idx, idx + 1)]
 
     if args[0] == "--scan":
-        folder = args[1] if len(args) >= 2 else os.path.dirname(os.path.abspath(__file__))
+        default_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "IMAGE")
+        folder = args[1] if len(args) >= 2 else default_folder
         scan_and_process(folder, scale)
         return
 

@@ -29,6 +29,20 @@ pip install Pillow numpy
 
 ---
 
+## 專案結構
+
+```
+invert2a4/
+├── invert_to_a4_5.py   # 主程式（最新版）
+├── IMAGE/              # 圖片資料夾（來源圖 + 輸出 inverted 圖皆放此處）
+│   ├── XXXX.png
+│   ├── XXXX_a4_inverted.png
+│   └── ...
+└── README.md
+```
+
+---
+
 ## 使用方式
 
 ### 單檔處理
@@ -40,25 +54,25 @@ python3 invert_to_a4_5.py <輸入圖片> [輸出前綴] [--scale 倍數]
 | 參數 | 說明 |
 |---|---|
 | `<輸入圖片>` | 來源 PNG 路徑（必填） |
-| `[輸出前綴]` | 輸出檔案前綴（選填，預設為 `原檔名_a4_inverted`） |
+| `[輸出前綴]` | 輸出檔案前綴（選填，預設為 `原檔名_a4_inverted`，輸出至同資料夾） |
 | `--scale 倍數` | 縮放倍率（選填，預設自動計算單頁最大化） |
 
 **範例：**
 
 ```bash
 # 自動縮放，單頁最大化
-python3 invert_to_a4_5.py input.png
+python3 invert_to_a4_5.py IMAGE/input.png
 
 # 指定輸出前綴
-python3 invert_to_a4_5.py input.png output
+python3 invert_to_a4_5.py IMAGE/input.png IMAGE/output
 
 # 放大 2 倍（可能分頁）
-python3 invert_to_a4_5.py input.png output --scale 2
+python3 invert_to_a4_5.py IMAGE/input.png IMAGE/output --scale 2
 ```
 
 ### 批次掃描模式
 
-自動掃描指定資料夾，找出尚未有 inverted 版本的圖片並逐一處理：
+自動掃描 `IMAGE/` 資料夾，找出尚未有 inverted 版本的圖片並逐一處理：
 
 ```bash
 python3 invert_to_a4_5.py --scan [資料夾路徑] [--scale 倍數]
@@ -66,14 +80,14 @@ python3 invert_to_a4_5.py --scan [資料夾路徑] [--scale 倍數]
 
 | 參數 | 說明 |
 |---|---|
-| `--scan` | 啟用掃描模式（不指定路徑時，預設為程式所在資料夾） |
+| `--scan` | 啟用掃描模式（不指定路徑時，預設掃描 `IMAGE/` 子資料夾） |
 | `[資料夾路徑]` | 要掃描的資料夾路徑（選填） |
 | `--scale 倍數` | 縮放倍率（選填） |
 
 **範例：**
 
 ```bash
-# 掃描程式所在資料夾，補齊所有缺少的 inverted 檔
+# 掃描預設 IMAGE/ 資料夾，補齊所有缺少的 inverted 檔
 python3 invert_to_a4_5.py --scan
 
 # 掃描指定資料夾
@@ -112,8 +126,9 @@ python3 invert_to_a4_5.py --scan --scale 1.5
 
 ## 檔案說明
 
-| 檔案 | 說明 |
+| 檔案／資料夾 | 說明 |
 |---|---|
-| `invert_to_a4_5.py` | 最新版本（含批次掃描功能） |
+| `invert_to_a4_5.py` | 最新版本（含批次掃描、預設 `IMAGE/` 路徑） |
 | `invert_to_a4_4.py` | 前一版本 |
 | `invert_to_a4.py` ～ `invert_to_a4_3.py` | 歷史版本 |
+| `IMAGE/` | 所有圖片存放位置（來源圖與輸出圖皆在此） |
